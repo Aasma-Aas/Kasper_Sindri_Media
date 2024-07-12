@@ -1,0 +1,13 @@
+kasper:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      threads: 2
+      connect_timeout: 100
+      schema: public
+      dbname: kasper_sindri_media
+      host: localhost
+      port: 5432
+      user: postgres
+      password: "admin"

@@ -1,0 +1,53 @@
+
+sites:
+  - site_id: 12
+    event_action: 'Next Click'
+    tendency_cards:
+      - 'label data value'
+      - 'hint data value'
+    date_query :
+      - 'date BETWEEN MAKEDATE(EXTRACT(YEAR FROM CURDATE()), 1) AND DATE_SUB(CURDATE(), INTERVAL 1 DAY)'
+      - 'date between MAKEDATE(EXTRACT(YEAR FROM CURDATE()),1)  and  DATE_SUB(cast(NOW() as date), INTERVAL 1 DAY)'
+    cards_count:
+      - '_monthly'
+      - '_yearly'
+    count:
+      - ''
+      - '_second'
+      - '_third'
+    tendency_chart_var_1:
+      0: 'userneeds'
+      1: 'Categories'
+      2: 'Tags'
+    tendency_chart_var_2:
+      0:
+        - 'Opdater mig'
+        - 'Forbind mig'
+        - 'Hjælp mig med at forstå'
+        - 'Giv mig en fordel'
+        - 'Underhold mig'
+        - 'Inspirer mig'
+      1:
+        - 'Nyheder'
+        - 'Debat'
+        - 'Inspiration'
+        - 'Anmeldelser'
+      2:
+        - 'skolepolitik'
+        - 'Psykisk arbejdsmiljø'
+    tendency_chart_var_3:
+      0:
+        - 'Opdater mig'
+        - 'Forbind mig'
+        - 'Hjælp mig med at forstå'
+        - 'Giv mig en fordel'
+        - 'Underhold mig'
+        - 'Inspirer mig'
+      1:
+        - 'Nyheder'
+        - 'Debat'
+        - 'Inspiration'
+        - 'Anmeldelser'
+      2:
+        - 'skolepolitik'
+        - 'Psykisk arbejdsmiljø'

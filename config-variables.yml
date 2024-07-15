@@ -1,4 +1,3 @@
-
 sites:
   - site_id: 12
     event_action: 'Next Click'

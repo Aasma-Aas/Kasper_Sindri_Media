@@ -12,6 +12,6 @@ rules:
     folder_path: '/path/to/Subscription'
 
 procedures:
-  - procedure_1: 'tactical_userneeds_pageviews_chart_month_13.sql'      
+  - procedure_1: 'tactical_articles_cards.sql'      
   # - procedure_2: 'test.sql'
   # - procedure_3: 'procedure_3.sql'

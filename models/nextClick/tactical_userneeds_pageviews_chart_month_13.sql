@@ -22,8 +22,8 @@ BEGIN
             id,
             date as fdate,
 		    CASE
-			    {%- for j in range(tendency_chart_var_2[i] | length)%}
-			    WHEN {{ tendency_chart_var_1[i] }} like "%{{ tendency_chart_var_2[i][j] }}%" then "{{ tendency_chart_var_3[i][j] }}"
+			    {%- for j in range(tendency_chart_value_userneeds[i] | length)%}
+			    WHEN {{ tendency_chart_col_userneeds[i] }} like "%{{ tendency_chart_value_userneeds[i][j] }}%" then "{{ tendency_chart_var_3[i][j] }}"
                 {%- endfor %}
 			    ELSE ''others''
 		    END AS tags
@@ -128,10 +128,10 @@ BEGIN
 				siteid as siteid ,
 				 {{tendency_cards_label}} as label,
                 {{tendency_cards_hint}} as hint,
-				GROUP_CONCAT(tags ORDER BY FIELD(tags, ',{{tendency_chart_var_2[i]}},', ''others'' ) SEPARATOR '','') AS cateogires,
-				GROUP_CONCAT(COALESCE(less_than_target, 0) ORDER BY FIELD(tags, ',{{tendency_chart_var_2[i]}},', ''others'' ) SEPARATOR '','') AS less_than_target,
-			GROUP_CONCAT(approved ORDER BY FIELD(tags, ',{{tendency_chart_var_2[i]}},', ''others'' ) SEPARATOR '','') AS approved,
-			GROUP_CONCAT(top_10 ORDER BY FIELD(tags, ',{{tendency_chart_var_2[i]}},', ''others'' ) SEPARATOR '','') AS top_10
+				GROUP_CONCAT(tags ORDER BY FIELD(tags, ',{{tendency_chart_value_userneeds[i]}},', ''others'' ) SEPARATOR '','') AS cateogires,
+				GROUP_CONCAT(COALESCE(less_than_target, 0) ORDER BY FIELD(tags, ',{{tendency_chart_value_userneeds[i]}},', ''others'' ) SEPARATOR '','') AS less_than_target,
+			GROUP_CONCAT(approved ORDER BY FIELD(tags, ',{{tendency_chart_value_userneeds[i]}},', ''others'' ) SEPARATOR '','') AS approved,
+			GROUP_CONCAT(top_10 ORDER BY FIELD(tags, ',{{tendency_chart_value_userneeds[i]}},', ''others'' ) SEPARATOR '','') AS top_10
 		from agg_data{{count[i]}}
 		group by 1,2,3
 		),

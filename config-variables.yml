@@ -14,11 +14,11 @@ sites:
       - ''
       - '_second'
       - '_third'
-    tendency_chart_var_1:
+    tendency_chart_col_userneeds:
       0: 'userneeds'
       1: 'Categories'
       2: 'Tags'
-    tendency_chart_var_2:
+    tendency_chart_value_userneeds:
       0:
         - 'Opdater mig'
         - 'Forbind mig'
@@ -34,7 +34,12 @@ sites:
       2:
         - 'skolepolitik'
         - 'Psykisk arbejdsmiljø'
-    tendency_chart_var_3:
+
+    tendency_chart_col_category:
+      0: 'userneeds'
+      1: 'Categories'
+      2: 'Tags'
+    tendency_chart_value_category:
       0:
         - 'Opdater mig'
         - 'Forbind mig'

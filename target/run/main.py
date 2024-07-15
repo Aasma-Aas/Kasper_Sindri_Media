@@ -45,9 +45,10 @@ class SQLRenderer:
                         count=i['count'],
                         tendency_cards_label=i['tendency_cards'][0],
                         tendency_cards_hint=i['tendency_cards'][1],
-                        tendency_chart_var_1=i['tendency_chart_var_1'],
-                        tendency_chart_var_2=i['tendency_chart_var_2'],
-                        tendency_chart_var_3=i['tendency_chart_var_3']
+                        tendency_chart_col_userneeds=i['tendency_chart_col_userneeds'],
+                        tendency_chart_value_userneeds=i['tendency_chart_value_userneeds'],
+                        tendency_chart_col_category=i['tendency_chart_col_category'],
+                        tendency_chart_value_category=i['tendency_chart_value_category'],
                     )
                     output_file_name = f"{value}_output.sql"
                     path = r"E:\Kasper_Sindri_Media\target\compiled" 

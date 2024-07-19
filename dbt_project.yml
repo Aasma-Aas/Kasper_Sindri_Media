@@ -1,8 +1,68 @@
-name: "kasper_sindri_media"
+name: 'site_dev'
+version: '1.0.0'
 
-config-version: 2
-version: "1.0.0"
+profile: 'site_dev'
 
-profile: "kasper"
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
 
-target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+
+
+# site_dev:
+#     database: site_dev  # Use the site_dev database for models in site_dev environment
+#     schema: site_dev  # Schema where DBT will create models/views
+# models:
+#   example:
+#     run_Tactical_pageviews_card_ytd_12:
+#       +materialized: view
+    
+models:
+  example:
+    +materialized: view
+    # database: prod 
+
+  # dbt_test:
+  #   example:
+  #     # +materialized: view
+  #     run_overview_sales_card_12:
+  #     enabled: true
+
+vars: 
+  site: 14
+  event_action: 'Next Click'
+
+  tendency:
+      dropdown_count:
+        - ''
+        - '_second'
+        - '_third'
+      
+      dropdown_name:
+        userneeds: 'userneeds'
+        Categories: 'Categories'
+        Tags: 'Tags'
+      
+      dropdown_val:
+        userneeds:
+          - 'Opdater mig'
+          - 'Forbind mig'
+          - 'Hjælp mig med at forstå'
+          - 'Giv mig en fordel'
+          - 'Underhold mig'
+          - 'Inspirer mig'
+        categories:
+          - 'Nyheder'
+          - 'Debat'
+          - 'Inspiration'
+          - 'Anmeldelser'
+        tags:
+          - 'skolepolitik'
+          - 'Psykisk arbejdsmiljø'

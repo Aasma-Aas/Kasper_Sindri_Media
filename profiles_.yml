@@ -1,0 +1,27 @@
+# kasper:
+#   target: dev
+#   outputs:
+#     dev:
+#       type: postgres
+#       threads: 2
+#       connect_timeout: 100
+#       schema: public
+#       dbname: kasper_sindri_media
+#       host: localhost
+#       port: 5432
+#       user: postgres
+#       password: "admin"
+
+profiles.yml:
+site_dev:
+  target: dev
+  outputs:
+    dev:
+      type: mysql
+      server: 195.154.196.76
+      port: 13498
+      user: site_dev
+      password: "87]N_8J!IlO+Y?(DB'B$"
+      schema: site_dev
+      database: prod
+

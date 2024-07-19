@@ -8,8 +8,8 @@ BEGIN
     SET @sql_query = '
     SELECT *
     FROM events
-    WHERE site_id = 123
-    AND event_action = "click"';
+    WHERE site_id = 
+    AND event_action = ""';
     
     PREPARE stmt FROM @sql_query;
     EXECUTE stmt;

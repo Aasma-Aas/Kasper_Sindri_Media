@@ -1,17 +1,21 @@
-rules:
-  - event_action: 'Next Click'
-    foldername: 'nextClick'
-    folder_path: 'E:\Kasper_Sindri_Media\models\nextClick'
+# rules:
+#   - event_action: 'Next Click'
+#     foldername: 'nextClick'
+#     folder_path: 'E:\Kasper_Sindri_Media\models\nextClick'
 
-  - event_action: 'Newsletter'
-    foldername: 'Newsletter'
-    folder_path: '/path/to/Newsletter'
+#   - event_action: 'Newsletter'
+#     foldername: 'Newsletter'
+#     folder_path: '/path/to/Newsletter'
 
-  - event_action: 'Subscription'
-    foldername: 'Subscription'
-    folder_path: '/path/to/Subscription'
+#   - event_action: 'Subscription'
+#     foldername: 'Subscription'
+#     folder_path: '/path/to/Subscription'
 
 procedures:
-  - procedure_1: 'tactical_articles_cards.sql'      
-  # - procedure_2: 'test.sql'
-  # - procedure_3: 'procedure_3.sql'
+  - procedure_1: 'Tactical_clicks_months_12.sql' 
+  - procedure_2: 'Tactical_clicks_ytd_12.sql' 
+  - procedure_3: 'tactical_articles_card_month_12.sql' 
+  - procedure_4: 'tactical_articles_card_year_12.sql' 
+  - procedure_5: 'Tactical_pageviews_card_month_12.sql' 
+  - procedure_6: 'Tactical_pageviews_card_ytd_12.sql'       
+

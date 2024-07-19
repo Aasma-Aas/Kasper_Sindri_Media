@@ -1,18 +1,15 @@
 {% set site = var('site') %}
-{% set monthly = var('date_month') %}
-{% set monthly_before = var('date_month_before') %}
-{% set yearly = var('date_year') %}
 {% set event_name = var('event_action') %}
-{% set tactical_articles_card = var('tendency')['tactical_articles_card'] %}
-{% set label_val = tactical_articles_card['label'] %}
-{% set hint_val = tactical_articles_card['hint'] %}
+-- {% set tactical_articles_card = var('tendency')['tactical_articles_card'] %}
+-- {% set label_val = tactical_articles_card['label'] %}
+-- {% set hint_val = tactical_articles_card['hint'] %}
 DELIMITER //
-CREATE PROCEDURE `prod`.`Tactical_clicks_months_12_dbt_test`()
+CREATE PROCEDURE `Tactical_clicks_months_12_dbt_test`()
 BEGIN
     WITH curr_30_days_article_published AS (
         SELECT siteid, id
         FROM prod.site_archive_post
-        WHERE date BETWEEN {{ monthly }}
+        WHERE date BETWEEN MAKEDATE(EXTRACT(YEAR FROM CURDATE()),1)  and  DATE_SUB(cast(NOW() as date), INTERVAL 1 DAY)
         AND categories <> "Nyhedsoverblik"
         AND siteid = '{{ site }}'
     ),
@@ -22,7 +19,7 @@ BEGIN
             SUM(e.hits) AS next_clicks
         FROM prod.events e
         JOIN curr_30_days_article_published a ON a.id = e.postid
-        WHERE e.date BETWEEN {{ monthly }}
+        WHERE e.date between MAKEDATE(EXTRACT(YEAR FROM CURDATE()),1)  and  DATE_SUB(cast(NOW() as date), INTERVAL 1 DAY)
         AND e.siteid = '{{ site }}'
         AND e.Event_Action = '{{event_name}}'
         GROUP BY 1
@@ -34,7 +31,7 @@ BEGIN
         FROM prod.pages p
         LEFT JOIN curr_30_days_article_published a ON a.id = p.postid
         WHERE p.siteid = '{{ site }}'
-        AND p.date BETWEEN {{ monthly }}
+        AND p.date between MAKEDATE(EXTRACT(YEAR FROM CURDATE()),1)  and  DATE_SUB(cast(NOW() as date), INTERVAL 1 DAY)
         GROUP BY p.siteid
     ),
     value_curr_30_days AS (
@@ -47,7 +44,7 @@ BEGIN
     last_30_days_article_published AS (
         SELECT siteid, id
         FROM prod.site_archive_post
-        WHERE date BETWEEN {{ monthly_before }}
+        WHERE date between DATE_SUB(MAKEDATE(EXTRACT(YEAR FROM CURDATE()),1), INTERVAL 1 Year)  and DATE_SUB(DATE_SUB(cast(NOW() as date), INTERVAL 1 DAY),INTERVAL 1 Year) 
         AND siteid = site
         AND categories <> "Nyhedsoverblik"
     ),
@@ -57,7 +54,7 @@ BEGIN
             SUM(e.hits) AS next_clicks_last
         FROM prod.events e
         JOIN last_30_days_article_published a ON a.id = e.postid
-        WHERE e.date BETWEEN {{ monthly_before }}
+        WHERE e.date between DATE_SUB(MAKEDATE(EXTRACT(YEAR FROM CURDATE()),1), INTERVAL 1 Year) and DATE_SUB(DATE_SUB(cast(NOW() as date), INTERVAL 1 DAY),INTERVAL 1 Year) 
         AND e.siteid = '{{ site }}'
         AND e.Event_Action = '{{event_name}}'
         GROUP BY 1
@@ -69,7 +66,7 @@ BEGIN
         FROM prod.pages p
         LEFT JOIN last_30_days_article_published a ON a.id = p.postid
         WHERE p.siteid = '{{ site }}'
-        AND p.date BETWEEN {{ monthly_before }}
+        AND p.date between DATE_SUB(MAKEDATE(EXTRACT(YEAR FROM CURDATE()),1), INTERVAL 1 Year)  and DATE_SUB(DATE_SUB(cast(NOW() as date), INTERVAL 1 DAY),INTERVAL 1 Year) 
         GROUP BY p.siteid
     ),
     value_last_30_days AS (
@@ -83,8 +80,8 @@ BEGIN
         JSON_OBJECT(
             'site', al.siteid,
             'data', JSON_OBJECT(
-            'label', '{{ label_val }}',
-            'hint', '{{ hint_val }}',
+            'label', 'Gns. next click (%)',
+            'hint', 'Gns. next click på artikler publiceret seneste 30 dage ift. forrige 30 dage',
             'value', COALESCE(value, 0),
             'change', COALESCE(value - value_last, 0),
             'progressCurrent', '',

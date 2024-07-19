@@ -23,7 +23,7 @@ BEGIN
             date as fdate,
 		    CASE
 			    {%- for j in range(tendency_chart_value_userneeds[i] | length)%}
-			    WHEN {{ tendency_chart_col_userneeds[i] }} like "%{{ tendency_chart_value_userneeds[i][j] }}%" then "{{ tendency_chart_var_3[i][j] }}"
+			    WHEN {{ tendency_chart_col_userneeds[i] }} like "%{{ tendency_chart_value_userneeds[i][j] }}%" then "{{ tendency_chart_like_userneeds[i][j] }}"
                 {%- endfor %}
 			    ELSE ''others''
 		    END AS tags
@@ -126,7 +126,7 @@ BEGIN
         categories_d{{count[i]}} as (
 			select 
 				siteid as siteid ,
-				 {{tendency_cards_label}} as label,
+				{{tendency_cards_label}} as label,
                 {{tendency_cards_hint}} as hint,
 				GROUP_CONCAT(tags ORDER BY FIELD(tags, ',{{tendency_chart_value_userneeds[i]}},', ''others'' ) SEPARATOR '','') AS cateogires,
 				GROUP_CONCAT(COALESCE(less_than_target, 0) ORDER BY FIELD(tags, ',{{tendency_chart_value_userneeds[i]}},', ''others'' ) SEPARATOR '','') AS less_than_target,

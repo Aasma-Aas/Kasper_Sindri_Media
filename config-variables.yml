@@ -14,6 +14,12 @@ sites:
       - ''
       - '_second'
       - '_third'
+
+    tendency_dropdown:
+      - 'Brugerbehov'
+      - 'Type'
+      - 'Branche'
+
     tendency_chart_col_userneeds:
       0: 'userneeds'
       1: 'Categories'
@@ -35,11 +41,46 @@ sites:
         - 'skolepolitik'
         - 'Psykisk arbejdsmiljø'
 
+    tendency_chart_like_userneeds:
+      0:
+        - 'Opdater mig'
+        - 'Forbind mig'
+        - 'Hjælp mig med at forstå'
+        - 'Giv mig en fordel'
+        - 'Underhold mig'
+        - 'Inspirer mig'
+      1:
+        - 'Nyheder'
+        - 'Debat'
+        - 'Inspiration'
+        - 'Anmeldelser'
+      2:
+        - 'skolepolitik'
+        - 'Psykisk arbejdsmiljø'
+    
     tendency_chart_col_category:
       0: 'userneeds'
       1: 'Categories'
       2: 'Tags'
+
     tendency_chart_value_category:
+      0:
+        - 'Opdater mig'
+        - 'Forbind mig'
+        - 'Hjælp mig med at forstå'
+        - 'Giv mig en fordel'
+        - 'Underhold mig'
+        - 'Inspirer mig'
+      1:
+        - 'Nyheder'
+        - 'Debat'
+        - 'Inspiration'
+        - 'Anmeldelser'
+      2:
+        - 'skolepolitik'
+        - 'Psykisk arbejdsmiljø'
+
+    tendency_chart_like_category:
       0:
         - 'Opdater mig'
         - 'Forbind mig'

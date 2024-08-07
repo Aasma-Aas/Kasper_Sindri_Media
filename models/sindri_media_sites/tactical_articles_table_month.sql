@@ -4,22 +4,35 @@
 {% set db_name = var('db_name_default') %}
 {% set tag_filter = var('tag_filter') %}
 {% set status_ = var('tag_filter')['status']%}
+{% set table_status = var('table_case')['status']%}
 {% set query_tag = var('tag_filter')['query_tag']%}
+{% set tendency = var('tendency')%}
+{% set chart_count = tendency['tendency_chart_col_userneeds'][2]%}
+{% set chart_val = tendency['tendency_chart_value_userneeds'][2]%}
+{% set val_like = tendency['tendency_chart_like_userneeds'][2]%}
 
 CREATE {{db_name}} PROCEDURE `prod`.`tactical_articles_table_month_dbt_{{ site }}`()
 BEGIN
 
 with last_30_days_article_published as(
 SELECT siteid as siteid,id,title as article,userneeds as category,COALESCE(tags, '') AS tags,COALESCE(Categories, '') AS sektion,link as url, DATE(Modified) as  updated,
-date as date  FROM prod.site_archive_post
+date as date  
+{% if table_status == 'yes' %}
+,CASE
+		{% for i in range(chart_val | length) %} 
+			WHEN {{ chart_count }}  REGEXP ".*{{ chart_val[i] }}.*" THEN "{{ val_like[i] }}" 
+		{% endfor %}
+			ELSE 'others'
+		END AS emner
+{% endif %}
+
+FROM prod.site_archive_post
 where 
 date between DATE_SUB(NOW(), INTERVAL 31 DAY) and DATE_SUB(NOW(), INTERVAL 1 DAY) 
 {% if status_ == 'yes' %}
   AND {{ query_tag }}
 {% endif %}
 and siteid = {{site}} 
-
-
  ),
 uniquepages as
 (

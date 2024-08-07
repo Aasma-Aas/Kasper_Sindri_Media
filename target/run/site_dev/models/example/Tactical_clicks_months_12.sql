@@ -5,18 +5,20 @@
   as (
     
 
--- 
--- 
--- 
-DELIMITER //
+
+
+
+
 CREATE PROCEDURE `Tactical_clicks_months_12_dbt_test`()
 BEGIN
     WITH curr_30_days_article_published AS (
         SELECT siteid, id
         FROM prod.site_archive_post
         WHERE date BETWEEN DATE_SUB(NOW(), INTERVAL 31 DAY) AND DATE_SUB(NOW(), INTERVAL 1 DAY)
-        AND categories <> "Nyhedsoverblik"
-        AND siteid = '14'
+        
+            AND Categories <> 'Nyhedsoverblik'
+        
+        AND siteid = 14
     ),
     agg_curr_30_days_events AS (
         SELECT 
@@ -25,7 +27,7 @@ BEGIN
         FROM prod.events e
         JOIN curr_30_days_article_published a ON a.id = e.postid
         WHERE e.date BETWEEN DATE_SUB(NOW(), INTERVAL 31 DAY) AND DATE_SUB(NOW(), INTERVAL 1 DAY)
-        AND e.siteid = '14'
+        AND e.siteid = 14
         AND e.Event_Action = 'Next Click'
         GROUP BY 1
     ),
@@ -35,7 +37,7 @@ BEGIN
             SUM(p.unique_pageviews) AS pageview_sum
         FROM prod.pages p
         LEFT JOIN curr_30_days_article_published a ON a.id = p.postid
-        WHERE p.siteid = '14'
+        WHERE p.siteid = 14
         AND p.date BETWEEN DATE_SUB(NOW(), INTERVAL 31 DAY) AND DATE_SUB(NOW(), INTERVAL 1 DAY)
         GROUP BY p.siteid
     ),
@@ -60,7 +62,7 @@ BEGIN
         FROM prod.events e
         JOIN last_30_days_article_published a ON a.id = e.postid
         WHERE e.date BETWEEN DATE_SUB(NOW(), INTERVAL 61 DAY) AND DATE_SUB(NOW(), INTERVAL 31 DAY)
-        AND e.siteid = '14'
+        AND e.siteid = 14
         AND e.Event_Action = 'Next Click'
         GROUP BY 1
     ),
@@ -70,7 +72,7 @@ BEGIN
             SUM(p.unique_pageviews) AS pageview_sum_last
         FROM prod.pages p
         LEFT JOIN last_30_days_article_published a ON a.id = p.postid
-        WHERE p.siteid = '14'
+        WHERE p.siteid = 14
         AND p.date BETWEEN DATE_SUB(NOW(), INTERVAL 61 DAY) AND DATE_SUB(NOW(), INTERVAL 31 DAY)
         GROUP BY p.siteid
     ),
@@ -95,7 +97,6 @@ BEGIN
         ) AS json_data
     FROM value_curr_30_days al
     LEFT JOIN value_last_30_days alb ON al.siteid = alb.siteid
-    WHERE al.siteid = '14';
+    WHERE al.siteid = 14;
 END;
-DELIMITER ;
   );

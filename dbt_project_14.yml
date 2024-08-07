@@ -40,16 +40,13 @@ vars:
   db_name_default : 'DEFINER=`Site`@`%`'
   site: 14
   event_action: 'Next Click'
+  table_case:
+    status: 'no'
   
   tag_filter: 
     status: 'yes'
     query_tag: " Categories <> 'Nyhedsoverblik' "
   
-    # exclude:
-      # # exclude_query: "{{ exclude_col }} <> '{{ val }}'"
-      # col: 'Categories'
-      # exclude_val:
-      #   - 'Nyhedsoverblik'
 
   json: '[{"field":"id","label":"ID"},{"field":"article","label":"ARTIKEL"},{"field":"category","label":"BRUGERBEHOV"},{"field":"sektion","label":"ARTIKELTYPE","hidden":true},{"field":"tags","label":"Tags","hidden":true},{"field":"date","label":"DATO"},{"field":"brugerbehov","label":"SIDEVISNINGER"},{"field":"clicks","label":"NEXT CLICK (%)"}]'
 
@@ -71,10 +68,6 @@ vars:
         1: 'Categories'
         2: 'Tags'
 
-      tendency_condition:
-        0: 'like'
-        1: 'like'
-        2: 'like'
       
       tendency_chart_value_userneeds:
         0:
@@ -86,11 +79,13 @@ vars:
           - 'Underhold mig'
           - 'Inspirer mig' 
         1:
+          - 'Nyhed'
           - 'Debat'
-          - 'Artikel'
-          - 'Nyhedsoverblik'
           - 'Guide'
+          - 'Artikel'
           - 'Digidoc'
+          - 'post'
+          - 'news_overview'
         2:
           - 'Arbejdsmiljø'
           - 'Social dumping'
@@ -109,11 +104,13 @@ vars:
           - 'Underhold mig'
           - 'Inspirer mig'
         1:
+          - 'Nyhed'
           - 'Debat'
-          - 'Artikel'
-          - 'Nyhedsoverblik'
           - 'Guide'
+          - 'Artikel'
           - 'Digidoc'
+          - 'post'
+          - 'news_overview'
         2:
           - 'Arbejdsmiljø'
           - 'Social dumping'

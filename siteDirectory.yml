@@ -1,5 +1,5 @@
 procedures:
-  - procedure_1: 'tactical_articles_card_month.sql' 
+  # - procedure_1: 'tactical_articles_card_month.sql'
   # - procedure_2: 'tactical_articles_card_ytd.sql'
   # - procedure_3: 'Tactical_clicks_month.sql' 
   # - procedure_4: 'Tactical_clicks_ytd.sql' 
@@ -13,8 +13,11 @@ procedures:
   # - procedure_12: 'tactical_userneeds_pageviews_chart_ytd.sql'
   # - procedure_13: 'tactical_category_pageviews_chart_month.sql'
   # - procedure_14: 'tactical_category_pageviews_chart_ytd.sql'
-  # - procedure_15: 'tactical_userneeds_clicks_chart_month.sql'
-  # - procedure_16: 'tactical_userneeds_clicks_chart_ytd.sql'
+  # - procedure_15: 'tactical_userneeds_clicks_chart_month_12.sql'
+  # - procedure_16: 'tactical_userneeds_clicks_chart_ytd_12.sql'
+  - procedure_17: 'macro_pro.sql'
+
+  # use 12 (15,17)
 
 
   

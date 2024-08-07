@@ -1,70 +1,21 @@
-from jinja2 import Template
-import yaml, os
+from DBTManager import DBTManager
+from MySQLManager import MySQLManager
 
-class SQLRenderer:
-    def __init__(self, siteDirectory_yaml_path, yaml_config):
-        self.yaml_config = yaml_config
-        self.siteDirectory_yaml_path = siteDirectory_yaml_path
-        self.config_variables = self.load_yaml(self.yaml_config)
-        self.site_config = self.load_yaml(self.siteDirectory_yaml_path)
-        self.folder_path = self.get_folder_path()
+if __name__ == '__main__':
+    dbt_project_path = r'E:\Kasper_Sindri_Media'
+    site_folder = 'site4folderlatest'
+    yaml_file_path = 'siteDirectory.yml'
 
-    def load_yaml(self, path):
-        with open(path, 'r') as file:
-            return yaml.safe_load(file)
+    # Create instances of the managers
+    dbt_manager = DBTManager(dbt_project_path, site_folder)
+    mysql_manager = MySQLManager(
+        host='51.158.56.32',
+        port=1564,
+        user='Site',
+        password="515B]_nP0;<|=pJOh35I",
+        database='prod'
+    )
 
-    
-    # print(event_action)
-    def get_folder_path(self):
-        event_action_list = ['Next Click']
-        for rule in self.site_config['rules']:
-            print(rule)
-            if rule['event_action'] in event_action_list:
-                return rule['folder_path']
-        raise ValueError(f"No folder path found for event_action in {event_action_list}")
-
-    def render_sql(self):
-        procedures = self.site_config.get('procedures', [])
-        for proc in procedures:
-            for key, value in proc.items():
-                sql_template_path = os.path.join(self.folder_path, value)
-                if not os.path.isfile(sql_template_path):
-                    raise FileNotFoundError(f"SQL template file not found: {sql_template_path}")
-                
-                with open(sql_template_path, 'r') as sql_file:
-                    template_str = sql_file.read()
-
-                template = Template(template_str)
-                for i in self.config_variables['sites']:
-                    print(i)
-                    rendered_sql = template.render(
-                        site_id=i['site_id'],
-                        event_action=i['event_action'],
-                        date_query=i['date_query'],
-                        cards_count=i['cards_count'],
-                        count=i['count'],
-                        tendency_cards_label=i['tendency_cards'][0],
-                        tendency_cards_hint=i['tendency_cards'][1],
-                        tendency_dropdown=i['tendency_dropdown'],
-                        tendency_chart_col_userneeds=i['tendency_chart_col_userneeds'],
-                        tendency_chart_value_userneeds=i['tendency_chart_value_userneeds'],
-                        tendency_chart_like_userneeds=i['tendency_chart_like_userneeds'],
-                        tendency_chart_col_category=i['tendency_chart_col_category'],
-                        tendency_chart_value_category=i['tendency_chart_value_category'],
-                        tendency_chart_like_category=i['tendency_chart_like_category']
-                    )
-                    output_file_name = f"{value}_output.sql"
-                    path = r"E:\Kasper_Sindri_Media\target\compiled" 
-                    # output_file_path = os.path.join(self.folder_path, output_file_name)
-                    output_file_path = os.path.join(path, output_file_name)
-                    with open(output_file_path, 'w') as file:
-                        file.write(rendered_sql)
-                    print(f"Rendered SQL saved to {output_file_path}")
-
-if __name__ == "__main__":
-    
-    siteDirectory_yaml_path = r'E:\Kasper_Sindri_Media\siteDirectory.yml'
-    yaml_config = r'E:\Kasper_Sindri_Media\config-variables.yml'
-    
-    sql_renderer = SQLRenderer(siteDirectory_yaml_path, yaml_config)
-    sql_renderer.render_sql()
+    dbt_manager.copy_dbt_project_file(4)
+    dbt_manager.run_procedures_from_yaml(yaml_file_path, mysql_manager)
+    mysql_manager.update_queries_with_site_id(4)

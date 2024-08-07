@@ -5,8 +5,6 @@
 {% set status_ = var('tag_filter')['status']%}
 {% set query_tag = var('tag_filter')['query_tag']%}
 
-
-
 CREATE {{db_name}} PROCEDURE `prod`.`tactical_userneeds_clicks_chart_month_dbt_{{ site }}`()
 BEGIN
 with last_ytd_article_published as(

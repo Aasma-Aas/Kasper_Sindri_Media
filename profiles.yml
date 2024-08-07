@@ -1,71 +1,12 @@
-# default:
-#   target: dev
-#   outputs:
-#     dev:
-#       type: mysql
-#       server: 195.154.196.76
-#       port: 13498  # optional
-#       database: pre_stage # optional, should be same as schema
-#       schema: pre_stage
-#       username: site_dev
-#       password: "87]N_8J!IlO+Y?(DB'B$"
-
-# site_dev:
-#   target: dev
-#   outputs:
-#     dev:
-#       type: mysql
-#       server: 195.154.196.76
-#       port: 13498  # optional
-#       database: prod # optional, should be same as schema
-#       schema: prod
-#       username: site_dev
-#       password: "87]N_8J!IlO+Y?(DB'B$"
-
-#     # prod:
-#     #   type: mysql
-#     #   server: 195.154.196.76
-#     #   port: 13498  # optional
-#     #   database: pre_stage # optional, should be same as schema
-#     #   schema: pre_stage
-#     #   username: site_dev
-#     #   password: "87]N_8J!IlO+Y?(DB'B$"
-
-# profiles.yml:
 site_dev:
   target: dev
   outputs:
     dev:
       type: mysql
-      server: 195.154.196.76
+      host: 195.154.196.76
       port: 13498
       user: site_dev
       password: "87]N_8J!IlO+Y?(DB'B$"
       schema: site_dev
       database: site_dev
-
-# site_dev:
-#   target: dev
-#   outputs:
-#     dev:
-#       type: mysql
-#       host: 51.158.56.32
-#       user: Site
-#       password: "515B]_nP0;<|=pJOh35I"
-#       port: 1564
-#       dbname: Site  # Ensure this is not empty and is the correct database name
-#       # schema: prod
-#       connect_timeout: 600  # Increase connect timeout (10 minutes)
-#       read_timeout: 600     # Increase read timeout (10 minutes)
-  
-
- 
-
-    # prod:  # Define a prod output within site_dev to access prod database
-    #   type: mysql
-    #   server: 195.154.196.76
-    #   port: 13498
-    #   user: site_dev  # Replace with actual prod database user
-    #   password: "87]N_8J!IlO+Y?(DB'B$"
-    #   schema: prod
-    #   database: prod
+      threads: 1  # Add this if you plan to run multiple threads

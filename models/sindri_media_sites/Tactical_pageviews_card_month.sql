@@ -1,5 +1,8 @@
 {% set site = var('site') %}
 {% set db_name = var('db_name_default') %}
+{% set tag_filter = var('tag_filter') %}
+{% set status_ = var('tag_filter')['status']%}
+{% set query_tag = var('tag_filter')['query_tag']%}
 
 
 
@@ -10,6 +13,9 @@ with last_30_article_published as(
 SELECT siteid as siteid,id   FROM prod.site_archive_post
 where 
 date  between DATE_SUB(NOW(), INTERVAL 30 DAY) and DATE_SUB(NOW(), INTERVAL 1 DAY) 
+{% if status_ == 'yes' %}
+  AND {{ query_tag }}
+{% endif %}
 and siteid = {{site}}
 ),
  last_30_article_published_Agg as
@@ -30,6 +36,9 @@ last_30_before_article_published as(
 SELECT siteid as siteid,id   FROM prod.site_archive_post
 where 
 date  between DATE_SUB(NOW(), INTERVAL 60 DAY) and DATE_SUB(NOW(), INTERVAL 30 DAY) 
+{% if status_ == 'yes' %}
+  AND {{ query_tag }}
+{% endif %}
 and siteid = {{site}} 
 
 ),
@@ -46,7 +55,7 @@ where date  between DATE_SUB(NOW(), INTERVAL 60 DAY) and DATE_SUB(NOW(), INTERVA
 group by 1,agg
 ),
 json_data as( 
-select al.siteid as siteid, 'Besøg' as label, 'Besøg år til dato ift sidste år til dato og ift målsætning' as  hint, al.value as valu,((al.value-alb.value)/al.value)*100 as chang, '' as progressCurrent , '' as progresstotal
+select al.siteid as siteid, 'Gns. sidevisninger pr artikel' as label, 'Gns. sidevisninger pr artikler publiceret seneste 30 dage ift. forrige 30 dage' as  hint, al.value as valu,((al.value-alb.value)/al.value)*100 as chang, '' as progressCurrent , '' as progresstotal
 from agg_last_30 al
 left join agg_last_30_before alb on al.siteid=alb.siteid
 where  al.siteid = {{site}}

@@ -21,8 +21,13 @@ BEGIN
     last_30_days_article_published{{ count[i] }} as(
         SELECT siteid as siteid,id,  date as fdate,
             CASE
-			{% for j in range(chart_val[i] | length) %} WHEN {{ chart_count[i] }}  {{tendency_condition[i]}} {% if tendency_condition[i] == 'like' %}  "%{{ chart_val[i][j] }}%" {% else %} "{{ chart_val[i][j] }}" {% endif %} THEN "{{ val_like[i][j] }}" {% endfor %}
-			ELSE 'others'
+			{% for j in range(chart_val[i] | length) %} 
+            
+            WHEN {{ chart_count[i] }} REGEXP  ".*{{ chart_val[i][j] }}.*"  THEN "{{ val_like[i][j] }}"
+            
+            {% endfor %}
+			
+            ELSE 'others'
 			END AS tags
             FROM prod.site_archive_post  
         where 

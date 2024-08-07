@@ -1,6 +1,9 @@
 {% set site = var('site') %}
 {% set event_name  = var('event_action') %}
 {% set db_name = var('db_name_default') %}
+{% set tag_filter = var('tag_filter') %}
+{% set status_ = var('tag_filter')['status']%}
+{% set query_tag = var('tag_filter')['query_tag']%}
 
 
 CREATE {{db_name}}  PROCEDURE `prod`.`Tactical_clicks_months_dbt_{{ site }}`()
@@ -11,6 +14,9 @@ curr_30_days_article_published AS (
     SELECT siteid, id
     FROM prod.site_archive_post
     WHERE date BETWEEN DATE_SUB(NOW(), INTERVAL 31 DAY) AND DATE_SUB(NOW(), INTERVAL 1 DAY) 
+        {% if status_ == 'yes' %}
+  AND {{ query_tag }}
+{% endif %}
     AND siteid = {{site}}
 ),
 
@@ -49,6 +55,9 @@ last_30_days_article_published AS (
     SELECT siteid, id
     FROM prod.site_archive_post
     WHERE date BETWEEN DATE_SUB(NOW(), INTERVAL 61 DAY) AND DATE_SUB(NOW(), INTERVAL 31 DAY) 
+        {% if status_ == 'yes' %}
+  AND {{ query_tag }}
+{% endif %}
     AND siteid = {{site}} 
 ),
 
@@ -86,8 +95,8 @@ SELECT
     JSON_OBJECT(
         'site', al.siteid,
         'data', JSON_OBJECT(
-        'label', 'Next click (%)',
-        'hint', 'Gns. next click år til dato ift. sidste år',
+        'label', 'Gns. next click (%)',
+        'hint', 'Gns. next click på artikler publiceret seneste 30 dage ift. forrige 30 dage',
         'value', COALESCE(value, 0),
         'change', COALESCE(value - value_last, 0),
         'progressCurrent', '',

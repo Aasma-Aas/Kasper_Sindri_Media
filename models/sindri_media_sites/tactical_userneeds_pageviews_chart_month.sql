@@ -8,7 +8,6 @@
 {% set dtitle = tendency['dtitle'] %}
 {% set count = tendency['dropdown_count']%}
 {% set dropdown_menu = tendency['dropdown_menu']%}
-{% set tendency_condition = tendency['tendency_condition']%}
 {% set chart_count = tendency['tendency_chart_col_userneeds']%}
 {% set chart_val = tendency['tendency_chart_value_userneeds']%}
 {% set val_like = tendency['tendency_chart_like_userneeds']%}
@@ -22,7 +21,11 @@ BEGIN
 	last_30_days_article_published{{ count[i] }} as(
 		SELECT siteid as siteid,id,  date as fdate,
 		CASE
-			{% for j in range(chart_val[i] | length) %} WHEN {{ chart_count[i] }}  {{tendency_condition[i]}} {% if tendency_condition[i] == 'like' %}  "%{{ chart_val[i][j] }}%" {% else %} "{{ chart_val[i][j] }}" {% endif %} THEN "{{ val_like[i][j] }}" {% endfor %}
+			{% for j in range(chart_val[i] | length) %} 
+
+			WHEN {{ chart_count[i] }} REGEXP ".*{{ chart_val[i][j] }}.*" THEN "{{ val_like[i][j] }}" 
+			
+			{% endfor %}
 			ELSE 'others'
 		END AS tags
         FROM prod.site_archive_post   
@@ -76,12 +79,12 @@ BEGIN
 			left join agg_pages_per_article{{ count[i] }} p on p.postid=e.id and p.siteid =e.siteid
 			left join agg_next_click_per_article{{ count[i] }}  a on a.postid=e.id and a.siteid = e.siteid
         ),
-		cta_per_article{{ count[i] }} as
+	cta_per_article{{ count[i] }} as
 		( 
-			select  e.siteid as siteid, e.postid, e.tags,
-			round(coalesce((coalesce(val,0)/coalesce(page_view,1)),0.0)*100.0,2) as val from agg_total{{ count[i] }}  e
-			where  e.siteid = {{site}}
-			group by 1,2,3
+		select  e.siteid as siteid, e.postid, e.tags,
+		round(coalesce((coalesce(val,0)/coalesce(page_view,1)),0.0)*100.0,2) as val from agg_total{{ count[i] }}  e
+		where  e.siteid = {{site}}
+		group by 1,2,3
 			),
 	agg_cta_per_article{{ count[i] }} as(
 		select siteid as siteid,tags,sum(val) as agg_sum from  cta_per_article{{ count[i] }}
@@ -126,7 +129,7 @@ BEGIN
 				sum(less_than_target_count) as total_tags_hit,
                 sum(top_10_count) as agg_by_top_10,
                 sum(approved_count) as agg_by_approved 
-			from counts
+			from counts{{ count[i] }}
 			where  siteid = {{site}}
 			group by 1
 		),
@@ -145,8 +148,8 @@ BEGIN
 		categories_d{{ count[i] }} as (
 			select 
 			siteid as siteid ,
-			'Artikler ift. tags og sidevisningsmål' as label,
-            'Artikler publiceret seneste 30 dage grupperet i tre kategorier: Artikler under sidevisningsmål | Artikler, der klarede mål | Top 10% bedste artikler ift. sidevisninger. For hver kategori vises hvor stor andel der er publiceret indenfor hvert tag, så det er muligt at se forskelle på tværs af kategorierne.' as hint,
+			'Artikler ift. next click mål' as label,
+            'help' as hint,
 			GROUP_CONCAT(tags ORDER BY FIELD(tags, '{% for j in range(chart_count[i] | length)%}{{val_like[i][j]}}{%- if not loop.last %}','{% endif %}{% endfor %}', 'others' ) SEPARATOR ',') 
 			AS cateogires,
 			GROUP_CONCAT(COALESCE(less_than_target, 0) ORDER BY FIELD(tags, '{% for j in range(chart_count[i] | length)%}{{val_like[i][j]}}{%- if not loop.last %}','{% endif %}{% endfor %}', 'others' ) SEPARATOR ',') 

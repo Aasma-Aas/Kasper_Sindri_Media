@@ -16,30 +16,18 @@ clean-targets:
   - "dbt_packages"
 
 
-
-# site_dev:
-#     database: site_dev  # Use the site_dev database for models in site_dev environment
-#     schema: site_dev  # Schema where DBT will create models/views
-# models:
-#   example:
-#     run_Tactical_pageviews_card_ytd_12:
-#       +materialized: view
     
 models:
   sindri_media_sites:
     +materialized: view
-    # database: prod 
 
-  # dbt_test:
-  #   example:
-  #     # +materialized: view
-  #     run_overview_sales_card_12:
-  #     enabled: true
 
 vars: 
   db_name_default : 'DEFINER=`Site`@`%`'
   site: 15
   event_action: 'Next Click'
+  table_case:
+    status: 'yes'
   
   tag_filter: 
     status: 'no'
@@ -70,11 +58,6 @@ vars:
         0: 'userneeds'
         1: 'Categories'
         2: 'Tags'
-
-      tendency_condition:
-        0: 'REGEXP'
-        1: 'REGEXP'
-        2: 'REGEXP'
       
       tendency_chart_value_userneeds:
         0:
@@ -86,22 +69,24 @@ vars:
           - 'Underhold mig'
           - 'Inspirer mig' 
         1:
+          - 'Leder'
           - 'Presse'
           - 'Privatansat'
           - 'Plejefamilie'
           - 'Tillidsrepræsentant'
-          - 'Leder'
           - 'Lærere'
           - 'Arbejdsmiljørepræsentant'
           - 'TRIO'
-          - 'Senior'
         2:
           - 'Børn og unge|Anbringelse|Sikrede institutioner'
-          - 'Ansættelsesvilkår|Opsigelse|Overenskomst|Arbejdstid|Løn|Ferie|Barsel|Senior |Ligestilling|Job og karriere|Uddannelse|Meritpædagoguddannelse|Kompetenceudvikling |Efteruddannelse|Arbejdsmiljø|Stress|Sygdom|Vold og trusler|Arbejdsskade|PTSD|A-kasse|Lønforsikring|Ledighed|Efterløn|Dagpenge|Arbejdsløshed'
-          - 'Autisme|Udviklingshandicap|Botilbud|Magtanvendelse|Seksualitet|Domfældte'
           - 'Socialpolitik|Nyheder|Forbund og a-kasse|Coronavirus'
+          - 'Autisme|Udviklingshandicap|Botilbud|Magtanvendelse|Seksualitet|Domfældte'
           - 'Psykiatri|Misbrug|Væresteder|Hjemløse|Herberg og forsorgshjem|Marginaliserede'
           - 'Socialpædagogisk faglighed|Socialpædagogisk praksis|Metoder og tilgange|Etik'
+          - 'Ansættelsesvilkår|Opsigelse|Overenskomst|Arbejdstid|Løn|Ferie|Barsel|Senior
+             |Ligestilling|Job og karriere|Uddannelse|Meritpædagoguddannelse|Kompetenceudvikling
+             |Efteruddannelse|Arbejdsmiljø|Stress|Sygdom|Vold og trusler|Arbejdsskade|PTSD|A-kasse
+             |Lønforsikring|Ledighed|Efterløn|Dagpenge|Arbejdsløshed'
 
       tendency_chart_like_userneeds:
         0:
@@ -113,19 +98,18 @@ vars:
           - 'Underhold mig'
           - 'Inspirer mig'
         1:
+          - 'Leder'
           - 'Presse'
           - 'Privatansat'
           - 'Plejefamilie'
           - 'Tillidsrepræsentant'
-          - 'Leder'
           - 'Lærere'
           - 'Arbejdsmiljørepræsentant'
           - 'TRIO'
-          - 'Senior'
         2:
           - 'Børn og unge'
-          - 'Arbejdsliv og vilkår'
-          - 'Handicap'
           - 'Andet'
+          - 'Handicap'
           - 'Psykiatri og udsathed'
           - 'Socialpædagogisk faglighed'
+          - 'Arbejdsliv og vilkår'

@@ -32,18 +32,6 @@
 #     #   password: "87]N_8J!IlO+Y?(DB'B$"
 
 # profiles.yml:
-# site_dev:
-#   target: dev
-#   outputs:
-#     dev:
-#       type: mysql
-#       server: 195.154.196.76
-#       port: 13498
-#       user: site_dev
-#       password: "87]N_8J!IlO+Y?(DB'B$"
-#       schema: site_dev
-#       database: prod
-
 site_dev:
   target: dev
   outputs:
@@ -53,8 +41,25 @@ site_dev:
       port: 13498
       user: site_dev
       password: "87]N_8J!IlO+Y?(DB'B$"
-      schema: site_dev  # Specify the schema you want to use within the site_dev database
-      database: site_dev  
+      schema: site_dev
+      database: site_dev
+
+# site_dev:
+#   target: dev
+#   outputs:
+#     dev:
+#       type: mysql
+#       host: 51.158.56.32
+#       user: Site
+#       password: "515B]_nP0;<|=pJOh35I"
+#       port: 1564
+#       dbname: Site  # Ensure this is not empty and is the correct database name
+#       # schema: prod
+#       connect_timeout: 600  # Increase connect timeout (10 minutes)
+#       read_timeout: 600     # Increase read timeout (10 minutes)
+  
+
+ 
 
     # prod:  # Define a prod output within site_dev to access prod database
     #   type: mysql

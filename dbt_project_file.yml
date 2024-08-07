@@ -1,8 +1,10 @@
 name: "kasper_sindri_media"
 
 config-version: 2
-version: "1.0.0"
+version: '1.7.17'
 
 profile: "kasper"
 
 target-path: "target"
+
+

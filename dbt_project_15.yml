@@ -15,12 +15,26 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+
+
+# site_dev:
+#     database: site_dev  # Use the site_dev database for models in site_dev environment
+#     schema: site_dev  # Schema where DBT will create models/views
+# models:
+#   example:
+#     run_Tactical_pageviews_card_ytd_12:
+#       +materialized: view
     
 models:
   sindri_media_sites:
     +materialized: view
     # database: prod 
 
+  # dbt_test:
+  #   example:
+  #     # +materialized: view
+  #     run_overview_sales_card_12:
+  #     enabled: true
 
 vars: 
   db_name_default : 'DEFINER=`Site`@`%`'

@@ -1,7 +1,0 @@
-site_id: 123
-event_action: 'Next Click'
-count : ['', '_second', '_third']
-diction : {0: 'userneeds', 1: 'Categories', 2: 'Tags'}
-diction2 : {0: ['Opdater mig', 'Forbind mig', 'Hjælp mig med at forstå', 'Giv mig en fordel','Underhold mig','Inspirer mig'], 1: ['Nyheder','Debat','Inspiration','Anmeldelser'],  2: ['skolepolitik', 'Psykisk arbejdsmiljø']}
-diction4 : {0: ['Opdater mig', 'Forbind mig', 'Hjælp mig med at forstå', 'Giv mig en fordel','Underhold mig','Inspirer mig'], 1: ['Nyheder','Debat','Inspiration','Anmeldelser'],  2: ['skolepolitik', 'Psykisk arbejdsmiljø']} 
-
